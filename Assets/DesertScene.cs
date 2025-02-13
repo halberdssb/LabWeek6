@@ -9,6 +9,7 @@ public class DesertScene : MonoBehaviour
     private Vector2 sceneDimensions; // size of plane/scene area
 
     // forest variables
+    public int treeAmount = 10; //number of trees made in forest
     private int numForestObjects; // number of objects to make in the forest
     private float minForestObjectSize;
     private float maxForestObjectSize;
@@ -26,6 +27,7 @@ public class DesertScene : MonoBehaviour
         InitializeVariables();
         CreateGround();
         CreatePyramid();
+        CreateForest();
     }
 
     // sets variables for scene creation
@@ -107,7 +109,37 @@ public class DesertScene : MonoBehaviour
 
     public void CreateForest()
     {
-
+        for (int t = 0; t <= treeAmount; t++)
+        {
+            int treeColor = Random.Range(1, 4);
+            float treeXPosition = Random.Range(-2f, -0.3f);
+            float treeZPosition = Random.Range(-2f, -0.3f);
+            float treeHeight = Random.Range(.25f, 1f);
+            float treeWidth = Random.Range(.25f, 1f);
+            float treeDepth = Random.Range(.25f, 1f);
+            GameObject tree = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            tree.transform.position = new UnityEngine.Vector3(treeXPosition, (treeHeight * 0.75f), treeZPosition);
+            tree.transform.localScale = new UnityEngine.Vector3(treeDepth, treeHeight, treeWidth);
+            int currentTreeColor = treeColor;
+            if (currentTreeColor == 1)
+            {
+                Renderer renderer = tree.GetComponent<Renderer>();
+                renderer.material = new Material(Shader.Find("Standard"));
+                renderer.material.color = Color.green;
+            }
+            else if (currentTreeColor == 2)
+            {
+                Renderer renderer = tree.GetComponent<Renderer>();
+                renderer.material = new Material(Shader.Find("Standard"));
+                renderer.material.color = Color.green * 1.5f;
+            }
+            else
+            {
+                Renderer renderer = tree.GetComponent<Renderer>();
+                renderer.material = new Material(Shader.Find("Standard"));
+                renderer.material.color = Color.green * 0.5f;
+            }
+        }
     }
 
     // creates a new material of a desired color and sets it to the object passed in
